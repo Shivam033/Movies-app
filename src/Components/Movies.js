@@ -26,7 +26,7 @@ export default class Movies extends Component {
         console.log(this.state.currPage);
         const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=5540e483a20e0b20354dabc2d66a31c9&language=en-US&page=${this.state.currPage}`)
         let data = res.data;
-        console.log(data);
+        // console.log(data);
         this.setState({
             movies:[...data.results]
         })
@@ -61,10 +61,10 @@ export default class Movies extends Component {
         if(this.state.favourites.includes(movie.id)){
             oldData = oldData.filter((m)=>m.id!==movie.id)
         }else{
-            localStorage.setItem("movies-app",JSON.stringify(oldData));
             oldData.push(movie)
-            this.handleFavouritesState(); //updating states
         }
+        localStorage.setItem("movies-app",JSON.stringify(oldData));
+        this.handleFavouritesState(); //updating states
     }
     handleFavouritesState=()=>{
         let oldData = JSON.parse(localStorage.getItem('movies-app') || "[]")
@@ -78,32 +78,32 @@ export default class Movies extends Component {
         // console.log("render");
         return (
             <>
-                {
-                
+                {                
                     this.state.movies.length === 0 ?
                     <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                        <span class="visually-hidden">Loading...</span>
                     </div> :
                     <div>
                         <h3 className="text-center"><strong>Trending</strong></h3>
                         <div className="movies-list">
                             {
                                 this.state.movies.map((movieObj)=>(
-                                    <div className="card moives-card" onMouseEnter={()=>this.setState({hover:movieObj.id})} onMouseLeave={()=>this.setState({hover:''})}>
-                                    <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} alt={movieObj.title} className="card-img-top movies-img" />
-                                    {/* <div class="card-body"> */}
-                                        <h5 className="card-title moives-title">{movieObj.original_title}</h5>
-                                        {/* <p class="card-text movies-text"></p> */}
-                                        <div className="button-wrapper"style={{display:'flex', width:'100%', justifyContent:'center'}}>
-                                        {
-                                            this.state.hover === movieObj.id && 
-                                            <a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieObj)}>{this.state.favourites.includes(movieObj.id)?"Remove from favourites":"Add to favourites"}</a>
-                                        }
-                                        
-                                        
-                                        </div>
-                                    {/* </div> */}
-                                </div>
+                                    <div className="card moives-card" /*style={{width: '20vw',
+                                        margin: '1rem',
+                                        color: 'white',
+                                        position: 'relative'}}*/ onMouseEnter={()=>this.setState({hover:movieObj.id})} onMouseLeave={()=>this.setState({hover:''})}>
+                                        <img src={`https://image.tmdb.org/t/p/original${movieObj.backdrop_path}`} alt={movieObj.title} className="card-img-top movies-img" />
+                                        {/* <div class="card-body"> */}
+                                            <h5 className="card-title moives-title">{movieObj.original_title}</h5>
+                                            {/* <p class="card-text movies-text"></p> */}
+                                            <div className="button-wrapper"style={{display:'flex', width:'100%', justifyContent:'center'}}>
+                                                {
+                                                    this.state.hover === movieObj.id && 
+                                                    <a className="btn btn-primary movies-button" onClick={()=>this.handleFavourites(movieObj)}>{this.state.favourites.includes(movieObj.id)?"Remove from favourites":"Add to favourites"}</a>
+                                                }
+                                            </div>
+                                        {/* </div> */}
+                                    </div>
                                 ))
                             }
                         </div>

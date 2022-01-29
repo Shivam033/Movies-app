@@ -73,14 +73,13 @@
   justify-content: center;
 }
 
-.movies-card{
-  width: 20vw;
+.card{
   margin: 1rem;
   color: white;
   position: relative;
 }
 
-.movies-title{
+.card-title{
   position: absolute;
   top: 1rem;
   left: 1rem;
@@ -121,8 +120,8 @@
     top: 17vh;
     left: 5vw;
   }
-  .movies-card{
-    width: 40vw;
+  .card{
+    /* width: 40vw; */
     margin: 0.1rem;
   }
   .movies-button{
